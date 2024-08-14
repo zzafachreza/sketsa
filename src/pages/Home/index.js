@@ -17,6 +17,8 @@ import { MyButton, MyGap, MyHeader } from '../../components';
 import GetLocation from 'react-native-get-location';
 import ProgressCircle from 'react-native-progress-circle';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import ImageCropper from "react-native-android-image-cropper";
+import RNFS from 'react-native-fs';
 export default function Home({ navigation, route }) {
 
   const requestCameraPermission = async () => {
@@ -107,6 +109,8 @@ export default function Home({ navigation, route }) {
 
 
   }
+
+
 
 
   useEffect(() => {
@@ -298,25 +302,45 @@ export default function Home({ navigation, route }) {
 
         <TouchableOpacity onPress={() => {
 
+          const options = {
+            guideLines: "on-touch",
+            cropShape: "rectangle",
+            title: 'SKETSA KEMEJA',
+            cropMenuCropButtonTitle: 'Done'
+          }
 
-          launchCamera({
-            includeBase64: true,
-            quality: 1,
-            mediaType: "photo",
-            maxWidth: 1000,
-            maxHeight: 1000
-          }, response => {
-            console.log('All Response = ', response);
+          ImageCropper.selectImage(options, (response) => {
+            //error throwns with response.error
+            if (response && response.uri) {
+              RNFS.readFile(response.uri, 'base64')
+                .then(res => {
 
-            if (!response.didCancel) {
-              setKirim({
-                ...kirim,
-                foto_baju: `data:${response.type};base64, ${response.base64}`,
-              });
+                  setKirim({
+                    ...kirim,
+                    foto_baju: `data:${response.type};base64,${res}`,
+                  });
+                });
             }
-
-
           });
+
+          // launchCamera({
+          //   includeBase64: true,
+          //   quality: 1,
+          //   mediaType: "photo",
+          //   maxWidth: 1000,
+          //   maxHeight: 1000
+          // }, response => {
+          //   console.log('All Response = ', response);
+
+          //   if (!response.didCancel) {
+          //     setKirim({
+          //       ...kirim,
+          //       foto_baju: `data:${response.type};base64, ${response.base64}`,
+          //     });
+          //   }
+
+
+          // });
 
 
 
