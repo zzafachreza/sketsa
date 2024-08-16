@@ -127,6 +127,7 @@ android {
 
     defaultConfig {
         applicationId "com.sketsa"
+          vectorDrawables.useSupportLibrary = true
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -200,8 +201,6 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
-  implementation "com.theartofdev.edmodo:android-image-cropper:2.8.0"
-
     implementation "com.facebook.react:react-native:+"  // From node_modules
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"

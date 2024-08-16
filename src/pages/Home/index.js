@@ -17,7 +17,9 @@ import { MyButton, MyGap, MyHeader } from '../../components';
 import GetLocation from 'react-native-get-location';
 import ProgressCircle from 'react-native-progress-circle';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
-import ImageCropper from "react-native-android-image-cropper";
+// import ImageCropper from "react-native-android-image-cropper";
+import ImagePicker from 'react-native-image-crop-picker';
+
 import RNFS from 'react-native-fs';
 export default function Home({ navigation, route }) {
 
@@ -309,19 +311,32 @@ export default function Home({ navigation, route }) {
             cropMenuCropButtonTitle: 'Done'
           }
 
-          ImageCropper.selectImage(options, (response) => {
-            //error throwns with response.error
-            if (response && response.uri) {
-              RNFS.readFile(response.uri, 'base64')
-                .then(res => {
-
-                  setKirim({
-                    ...kirim,
-                    foto_baju: `data:${response.type};base64,${res}`,
-                  });
-                });
-            }
+          ImagePicker.openCamera({
+            width: 340,
+            height: 340,
+            cropping: true,
+            includeBase64: true
+          }).then(image => {
+            console.log(image);
+            setKirim({
+              ...kirim,
+              foto_baju: `data:${image.mime};base64,${image.data}`,
+            });
           });
+
+          // ImageCropper.selectImage(options, (response) => {
+          //   //error throwns with response.error
+          //   if (response && response.uri) {
+          //     RNFS.readFile(response.uri, 'base64')
+          //       .then(res => {
+
+          //         setKirim({
+          //           ...kirim,
+          //           foto_baju: `data:${image.mime};base64,${image.data}`,
+          //         });
+          //       });
+          //   }
+          // });
 
           // launchCamera({
           //   includeBase64: true,
