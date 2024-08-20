@@ -62,26 +62,26 @@ export default function Splash({ navigation }) {
         backgroundColor: colors.white
 
       }}>
-        <ImageBackground source={require('../../assets/bgsplash.png')} style={{
+        <ImageBackground style={{
           flex: 1,
           width: '100%',
           height: '100%',
           justifyContent: 'center',
           alignItems: 'center',
-          backgroundColor: colors.black
+          backgroundColor: colors.white
 
         }}>
-          {/* <Animated.Image
-            source={require('../../assets/logo2.png')}
+          <Animated.Image
+            source={require('../../assets/bgsplash.png')}
             resizeMode="contain"
             style={{
               width: windowWidth,
               height: windowWidth
             }}
-          /> */}
+          />
 
 
-          <ActivityIndicator color={colors.white} size="large" />
+          <ActivityIndicator color={colors.black} size="large" />
         </ImageBackground>
       </View>
 
